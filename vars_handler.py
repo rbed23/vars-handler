@@ -17,7 +17,9 @@ def dump_vars(obj, trunc: int = TRUNC_LIMIT, keys: bool = False) -> dict:
     trunc = check_trunc_type(trunc)
 
     if check_keys(keys): # print only keys list
-        vars_keys = [x for x in vars(obj).keys()]
+        vars_keys = sorted(
+                        [x for x in vars(obj).keys()],
+                        key=lambda x: x.casefold())
         print(json.dumps(vars_keys, indent=2))
 
     else: # print attributes with values
@@ -52,7 +54,9 @@ def dump_dir(obj) -> list:
     :desc obj: any defined object variable
     '''
     try:
-        ks = [x for x in dir(obj)]
+        ks = sorted(
+                [x for x in dir(obj)],
+                key=lambda x: x.casefold())
         print(json.dumps(ks, indent=2))
     except Exception as exc:
         print(f"{exc}")
